@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreMotion
 
 class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
@@ -19,22 +20,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     var button1 : UIButton = UIButton()
     var button2 : UIButton = UIButton()
     
+    let motionManager: CMMotionManager = CMMotionManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initLocation()
-        
-//        mapView.delegate = self
-//        mapView.translatesAutoresizingMaskIntoConstraints = false
-//        self.view.addSubview(mapView)
-//        
-//        mapView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0.0).isActive = true
-//        mapView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0.0).isActive = true
-//        mapView.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
-//        mapView.heightAnchor.constraint(equalToConstant: self.view.frame.height).isActive = true
-//        
-//        mapView.userTrackingMode = MKUserTrackingMode.followWithHeading
-//        
-
     }
     
     internal func onClickTrackingButton(sender: UIButton){
@@ -44,42 +34,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             print(" + altitude = " + String(mapView.camera.altitude))
             print(" + pitch = " + String(describing: mapView.camera.pitch))
             
-//            print("1 + " + String(mapView.camera.altitude))
-//                        var fromCoordinate: CLLocationCoordinate2D = mapView.centerCoordinate
-//                        fromCoordinate.latitude = latitude * 0.5
-//                        fromCoordinate.longitude = longitude * 0.5
-//
-//            let distance = MKMetersBetweenMapPoints(MKMapPointForCoordinate(mapView.centerCoordinate),
-//                                                       MKMapPointForCoordinate(fromCoordinate))
-//            let altitude = (distance / tan(M_PI*(50/180.0)))
-//            let camera = MKMapCamera(lookingAtCenter: mapView.centerCoordinate, fromDistance: distance, pitch: CGFloat(altitude), heading: mapView.camera.heading)
-//                        
-//            
-//            mapView.setCamera(camera, animated: true)
-//            print("2 + " + String(mapView.camera.altitude))
-            
-            
-            
             
             let camera = MKMapCamera(lookingAtCenter: mapView.centerCoordinate, fromDistance: mapView.camera.altitude * 0.7, pitch: 70.0, heading: mapView.camera.heading)
             mapView.setCamera(camera, animated: true)
-            
-            
-//            let altitude = mapView.camera.altitude * 0.2
-//
-//            let camera = MKMapCamera(lookingAtCenter: mapView.centerCoordinate, fromEyeCoordinate: mapView.centerCoordinate, eyeAltitude: altitude)
-//            camera.pitch = 70.0
-//            mapView.setCamera(camera, animated: true)
-
-            
-//            var newRegion = mapView.region
-//            newRegion.span.latitudeDelta = newRegion.span.latitudeDelta * 0.5
-//            newRegion.span.longitudeDelta = newRegion.span.longitudeDelta * 0.5
-//            mapView.setRegion(newRegion, animated: true)
-            
-//            let newCamera = mapView.camera
-//            newCamera.pitch = newCamera.pitch * 1.2
-//            mapView.setCamera(newCamera, animated: true)
             
             print(" +2 altitude = " + String(mapView.camera.altitude))
             print(" +2 pitch = " + String(describing: mapView.camera.pitch))
@@ -89,44 +46,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             print(" - altitude = " + String(mapView.camera.altitude))
             print(" - pitch = " + String(describing: mapView.camera.pitch))
             
-//            print("1 - " + String(mapView.camera.altitude))
-//            var fromCoordinate: CLLocationCoordinate2D = mapView.centerCoordinate
-//            fromCoordinate.latitude = latitude * 1.5
-//            fromCoordinate.longitude = longitude * 1.5
-//            
-//            let distance = MKMetersBetweenMapPoints(MKMapPointForCoordinate(mapView.centerCoordinate),
-//                                                    MKMapPointForCoordinate(fromCoordinate))
-//            
-//            let altitude = (distance / tan(M_PI*(50/180.0)))
-            
-            
-            
-//            let camera = MKMapCamera(lookingAtCenter: mapView.centerCoordinate, fromDistance: mapView.camera.altitude * 2, pitch: 70.0, heading: mapView.camera.heading)
-//            mapView.setCamera(camera, animated: true)
-            
             
               let camera = MKMapCamera(lookingAtCenter: mapView.centerCoordinate, fromDistance: mapView.camera.altitude * 3, pitch: mapView.camera.pitch, heading: mapView.camera.heading)
               mapView.setCamera(camera, animated: true)
-            
-            
-//            print("2 - " + String(mapView.camera.altitude))
-            
-            
-//            let altitude = mapView.camera.altitude * 5
-//            
-//            let camera = MKMapCamera(lookingAtCenter: mapView.centerCoordinate, fromEyeCoordinate: mapView.centerCoordinate, eyeAltitude: altitude)
-//            camera.pitch = 70.0
-//            mapView.setCamera(camera, animated: true)
-
-            
-//            var newRegion = mapView.region
-//            newRegion.span.latitudeDelta = newRegion.span.latitudeDelta * 1.5
-//            newRegion.span.longitudeDelta = newRegion.span.longitudeDelta * 1.5
-//            mapView.setRegion(newRegion, animated: true)
-            
-//            let newCamera = mapView.camera
-//            newCamera.pitch = newCamera.pitch * 0.5
-//            mapView.setCamera(newCamera, animated: true)
            
             print(" -2 altitude = " + String(mapView.camera.altitude))
             print(" -2 pitch = " + String(describing: mapView.camera.pitch))
@@ -203,13 +125,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
         if(isInit){
             isInit = false
-        // scale setting
-//        var region:MKCoordinateRegion = mapView.region
-//        // region.center = location
-//        region.span.latitudeDelta = 0.005
-//        region.span.longitudeDelta = 0.005
-//        
-//        mapView.setRegion(region, animated:false)
+
         mapView.setCenter((locations.last?.coordinate)!, animated: false)
             let fromCoordinate: CLLocationCoordinate2D = mapView.centerCoordinate
             let newAltitude = 100.0
@@ -246,9 +162,71 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             button2.addTarget(self, action: #selector(onClickTrackingButton(sender:)), for: .touchUpInside)
             button2.tag = 1
             self.view.addSubview(button2)
+            
+            motionManager.deviceMotionUpdateInterval = 1 / 50
+            
+            time = UInt64(Date().timeIntervalSince1970 * 1000)
+            // Start motion data acquisition
+            motionManager.startDeviceMotionUpdates( to: OperationQueue.current!, withHandler:{
+                deviceManager, error in
+                
+                self.getDeviceMotion(deviceManager: deviceManager!)
+            })
         }
         
 
+    }
+    
+    var gyroX: Double = 0
+    var pitch: Double = 0
+    var time: UInt64 = 0
+    var pitchAverage = 0.0
+    
+    private func getDeviceMotion(deviceManager: CMDeviceMotion){
+//        // 加速度
+//        let accel: CMAcceleration = deviceManager.userAcceleration
+//        print("accel x = " + String(format: "%.2f", accel.x) + ", y = " + String(format: "%.2f", accel.y) +  ", z = " + String(format: "%.2f", accel.z))
+//        
+//
+//        
+//        
+//        //        // ジャイロ
+//        let gyro: CMRotationRate = deviceManager.rotationRate
+//        print("gyro x = " + String(format: "%.2f", gyro.x) + ", y = " + String(format: "%.2f", gyro.y) +  ", z = " + String(format: "%.2f", gyro.z))
+        
+        let gyro: CMRotationRate = deviceManager.rotationRate
+        let attitude: CMAttitude = deviceManager.attitude
+        let now: UInt64 = UInt64(Date().timeIntervalSince1970 * 1000)
+        if(now - time > UInt64(100)){
+            time = UInt64(Date().timeIntervalSince1970 * 1000)
+            // print("gyro x = " + String(format: "%.2f", gyroX))
+            // print("pitch = " + String(format: "%.2f", pitch))
+            if(gyroX > 20){
+                print("zoom in !")
+                let camera = MKMapCamera(lookingAtCenter: mapView.centerCoordinate, fromDistance: mapView.camera.altitude * 0.7, pitch: 70.0, heading: mapView.camera.heading)
+                mapView.setCamera(camera, animated: true)
+            }else if(gyroX < -20){
+                print("zoom out !")
+                let camera = MKMapCamera(lookingAtCenter: mapView.centerCoordinate, fromDistance: mapView.camera.altitude * 5, pitch: 70.0, heading: mapView.camera.heading)
+                mapView.setCamera(camera, animated: true)
+            }
+            gyroX = 0.0
+            pitch = 0.0
+        }else{
+            gyroX = gyroX + gyro.x
+            pitch = pitch + attitude.pitch
+        }
+        
+        
+        
+        
+        //
+        //        //姿勢
+        
+//        print("attitude roll = " + String(format: "%.2f", attitude.roll) + ", pitch = " + String(format: "%.2f", attitude.pitch) +  ", yaw = " + String(format: "%.2f", attitude.yaw))
+        
+        
+        
     }
     
     var isInit2 = true
@@ -257,9 +235,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         if(isInit2){
         isInit2 = false
             print("regionDidChangeAnimated")
-//            lm.startUpdatingLocation()
-//            lm.startUpdatingHeading()
-//            mapView.setUserTrackingMode(MKUserTrackingMode.followWithHeading, animated: false)
         }
         
         print("altitude = " + String(mapView.camera.altitude))
